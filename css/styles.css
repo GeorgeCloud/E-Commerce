@@ -1,0 +1,104 @@
+body {
+  background-color: lightblue;
+}
+
+a {
+  color: black;
+  /* text-decoration: none; */
+}
+
+h1 {
+  text-align: center;
+}
+
+li {
+  list-style-type: none;
+  display: inline;
+}
+
+figure {
+  border: solid 1px;
+  padding-top: 0;
+  /* padding: 0 1rem 1rem 1rem; */
+  padding-top: 0;
+  padding-bottom: 1rem;
+}
+
+figure img {
+  width: 15rem;
+  height: 10rem;
+}
+
+figure figcaption, p {
+  padding-left: 1rem;
+}
+
+#navigation {
+  display: flex;
+  justify-content: space-around;
+}
+
+#shop-items {
+  display: grid;
+  grid-gap: 1rem;
+  grid-column: column;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: "item-1 item-2  item-3  item-4"
+                       "item-5 item-6  item-7  item-8"
+                       "item-9 item-10 item-11 item-12";
+}
+
+.item-thumbnail {
+  width: 100%;
+}
+
+.courier-font-and-size-100 {
+}
+
+.item-1 {
+
+}
+
+.item-2 {
+
+}
+
+.item-3 {
+
+}
+
+.item-4 {
+
+}
+
+.item-5 {
+
+}
+
+.item-6 {
+
+}
+
+.item-7 {
+
+}
+
+.item-8 {
+
+}
+
+.item-9 {
+
+}
+
+.item-10 {
+
+}
+
+.item-11 {
+
+}
+
+.item-12 {
+
+}
