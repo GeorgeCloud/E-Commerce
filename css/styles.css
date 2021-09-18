@@ -1,5 +1,10 @@
 body {
   background-color: lightblue;
+  font-family: courier;x
+}
+
+h1 {
+  text-align: center;
 }
 
 a {
@@ -7,21 +12,16 @@ a {
   /* text-decoration: none; */
 }
 
-h1 {
-  text-align: center;
-}
-
 li {
   list-style-type: none;
-  display: inline;
 }
 
 figure {
   border: solid 1px;
   padding-top: 0;
-  /* padding: 0 1rem 1rem 1rem; */
-  padding-top: 0;
   padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 figure img {
@@ -33,72 +33,84 @@ figure figcaption, p {
   padding-left: 1rem;
 }
 
+button {
+  display: flex;
+  align-self: flex-end;
+  margin-right: 1rem;
+}
+
 #navigation {
   display: flex;
   justify-content: space-around;
 }
 
 #shop-items {
+  padding-left: 0px;
+
   display: grid;
   grid-gap: 1rem;
   grid-column: column;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas: "item-1 item-2  item-3  item-4"
                        "item-5 item-6  item-7  item-8"
-                       "item-9 item-10 item-11 item-12";
+                       "item-9 item-10 item-11 item-12"
+                       "cart   cart    cart    cart";
 }
 
-.item-thumbnail {
+.item {
   width: 100%;
 }
 
-.courier-font-and-size-100 {
-}
-
 .item-1 {
-
+  grid-area: "item-1";
 }
 
 .item-2 {
-
+  grid-area: "item-2";
 }
 
 .item-3 {
-
+  grid-area: "item-3";
 }
 
 .item-4 {
-
+  grid-area: "item-4";
 }
 
 .item-5 {
-
+  grid-area: "item-5";
 }
 
 .item-6 {
-
+  grid-area: "item-6";
 }
 
 .item-7 {
-
+  grid-area: "item-7";
 }
 
 .item-8 {
-
+  grid-area: "item-8";
 }
 
 .item-9 {
-
+  grid-area: "item-9";
 }
 
 .item-10 {
-
+  grid-area: "item-10";
 }
 
 .item-11 {
-
+  grid-area: "item-11";
 }
 
 .item-12 {
+  grid-area: "item-12";
+}
 
+.cart {
+  grid-area: "cart";
+  margin: 16px 40px;
+  border: solid 1px;
 }

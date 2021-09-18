@@ -1,0 +1,75 @@
+const data = [{
+  "id": 1,
+  "name": "happy",
+  "image": "./images/happy.gif",
+  "desc": "Happy",
+  "price": 17
+}, {
+  "id": 2,
+  "name": "tears",
+  "image": "images/tears.gif",
+  "desc": "Tears",
+  "price": 23
+}, {
+  "id": 3,
+  "name": "angry",
+  "image": "images/angry.gif",
+  "desc": "Angry",
+  "price": 100
+}, {
+  "id": 4,
+  "name": "calm",
+  "image": "images/calm.gif",
+  "desc": "Calm",
+  "price": 99
+}, {
+  "id": 5,
+  "name": "curious",
+  "image": "images/curious.gif",
+  "desc": "Curious",
+  "price": 24
+}, {
+  "id": 6,
+  "name": "disgust",
+  "image": "images/disgust.gif",
+  "desc": "Disgust",
+  "price": 75
+}, {
+  "id": 7,
+  "name": "energetic",
+  "image": "images/energetic.gif",
+  "desc": "Energetic",
+  "price": 99
+}, {
+  "id": 8,
+  "name": "gloomy",
+  "image": "images/gloomy.gif",
+  "desc": "Gloomy",
+  "price": 42
+}, {
+  "id": 9,
+  "name": "scary",
+  "image": "images/scary.gif",
+  "desc": "Scary",
+  "price": 63
+}, {
+  "id": 10,
+  "name": "shy",
+  "image": "images/shy.gif",
+  "desc": "Shy",
+  "price": 98
+}, {
+  "id": 11,
+  "name": "optimistic",
+  "image": "images/optimistic.gif",
+  "desc": "Optimistic",
+  "price": 34
+}, {
+  "id": 12,
+  "name": "surprised",
+  "image": "images/surprised.gif",
+  "desc": "Surprised",
+  "price": 12
+}]
+
+export default data;
