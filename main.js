@@ -3,30 +3,32 @@ import data from './data.js';
 const itemsCart = [];
 const ul_list = document.getElementById("shop-items");
 
+// Unused
+function uniqueCartCount(){
+  return Object.keys(itemsCart).length;
+}
+
 function addItem(item){
-  itemsCart.push(item);
+  const item_id = item.getAttribute("id");
+  if (itemsCart.hasOwnProperty(item_id)){
+    itemsCart[item_id][1] += 1;
+  }
+  else {
+    itemsCart[item_id] = [item, 1];
+  }
 }
 
 function removeItem(item){
-  for (let i = 0; i < itemsCart.length; i += 1){
-    if (item == itemsCart[i]){
-      itemsCart.splice(i, 1)
-    }
+  if (itemsCart.hasOwnProperty(item)){
+    delete itemsCart[item]
   }
+  // Before refactor
+  // for (let i = 0; i < cartCount(); i += 1){
+  //   if (item == itemsCart[i]){
+  //     itemsCart.splice(i, 1)
+  //   }
+  // }
 }
-
-function getCartTotal(){
-  let totalCartPrice = 0;
-  for (let i = 0; i < itemsCart.length; i += 1){
-    totalCartPrice += parseInt(itemsCart[i].getAttribute("data-price"));
-  }
-  return totalCartPrice
-}
-
-// const allItems = document.querySelector("#shop-items");
-// const itemsArray = document.querySelectorAll(".add-to-cart");
-
-
 
 for (let i = 0; i < data.length; i += 1){
   console.log("iterating through data.js");
@@ -40,7 +42,7 @@ for (let i = 0; i < data.length; i += 1){
 
   // Add image to figure
   const img = document.createElement('img');
-  img.className = `item item-${i}`;
+  img.className = `gif item-${i}`;
   img.src = data[i].image;
   figure.appendChild(img);
 
@@ -63,25 +65,48 @@ for (let i = 0; i < data.length; i += 1){
   figure.appendChild(button);
 }
 
+const qtyAndTotal = document.createElement('div');
+qtyAndTotal.className = "qty-and-total";
+ul_list.appendChild(qtyAndTotal);
+
+const itemInCart = document.createElement('p');
+itemInCart.innerText = `Items in cart: ${itemsCart.length}`;
+qtyAndTotal.appendChild(itemInCart);
+
+const cartTotalPrice = document.createElement('p');
+cartTotalPrice.innerText = `Total = $0`;
+qtyAndTotal.appendChild(cartTotalPrice);
+
+// display Cart
 const divCart = document.createElement('div');
 divCart.className = "cart";
 ul_list.appendChild(divCart);
 
-const linkToCart = document.createElement('a');
-linkToCart.href = "https://www.google.com";
-divCart.appendChild(linkToCart);
+const cartArray = document.createElement('ul');
+divCart.appendChild(cartArray);
 
-const itemInCart = document.createElement('p');
-itemInCart.innerText = `Items in cart: ${itemsCart.length}`;
-linkToCart.appendChild(itemInCart);
-
-const cartTotalPrice = document.createElement('p');
-cartTotalPrice.innerText = `Total = $0`;
-divCart.appendChild(cartTotalPrice);
+// const cartTotalPrice = document.createElement('p');
+// cartTotalPrice.innerText = `Total = $0`;
+// qtyAndTotal.appendChild(cartTotalPrice);
 
 function updateCart(){
-  itemInCart.innerText = `Items in cart: ${itemsCart.length}`;
-  cartTotalPrice.innerText = `Total = $${getCartTotal()}`;
+  let totalCartPrice = 0;
+  let itemsCount = 0;
+
+  Object.keys(itemsCart).forEach(function(key) {
+    const item = itemsCart[key];
+    itemsCount += 1 * item[1];
+    totalCartPrice += parseInt(item[0].getAttribute("data-price")) * item[1];
+  });
+
+  itemInCart.innerText = `Items in cart: ${itemsCount}`;
+  cartTotalPrice.innerText = `Total = $${totalCartPrice}`;
+  // For loop all items in cart
+  itemsCart.forEach(function(item) {
+    const itemInCart = document.createElement('li');   // v ${quantity}
+    itemInCart.innerHTML = `<b>${item.getAttribute("id")} $${item.getAttribute("data-price")} x  = $total_of_this_item}</b>`;
+    cartArray.appendChild(itemInCart);
+  });
 }
 
 // Listen to button clicks

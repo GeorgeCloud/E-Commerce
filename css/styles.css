@@ -51,13 +51,13 @@ button {
   grid-gap: 1rem;
   grid-column: column;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-areas: "item-1 item-2  item-3  item-4"
-                       "item-5 item-6  item-7  item-8"
-                       "item-9 item-10 item-11 item-12"
-                       "cart   cart    cart    cart";
+  grid-template-areas: "item-1        item-2  item-3  item-4"
+                       "item-5        item-6  item-7  item-8"
+                       "item-9        item-10 item-11 item-12"
+                       "qty-and-total cart    cart    cart";
 }
 
-.item {
+.gif {
   width: 100%;
 }
 
@@ -109,8 +109,18 @@ button {
   grid-area: "item-12";
 }
 
+.qty-and-total {
+  grid-area: "qty-and-total";
+  margin: 16px 40px;
+  border: solid 1px;
+}
+
 .cart {
   grid-area: "cart";
   margin: 16px 40px;
   border: solid 1px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  /* justify-content: space-around; */
 }
