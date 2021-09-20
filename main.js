@@ -8,35 +8,86 @@ function uniqueCartCount(){
   return Object.keys(itemsCart).length;
 }
 
-function addItem(item){
-  const item_id = item.getAttribute("id");
+function removeOneItemFromCart(item_id){
+  if (uniqueCartCount() > 1){
+    itemsCart[item_id] -= 1;
+  } else {
+    deleteItemFromCart(item_id);
+    return //  skip updateCart(); not sure if this works in JS;
+  }
+  updateCart();
+}
+
+function deleteItemFromCart(item_id){
+  if (itemsCart.hasOwnProperty(item_id)){
+    // Does not care if item quantity is greater than 1
+    delete itemsCart[item_id]
+    document.querySelector(`form[data-id="${item_id}"] p`).closest("form").remove();
+  }
+  updateCart();
+}
+
+function addItem(itemButton){
+  const item_id = itemButton.getAttribute("id");
+  const item_price = parseInt(itemButton.getAttribute("data-price"));
+
   if (itemsCart.hasOwnProperty(item_id)){
     itemsCart[item_id][1] += 1;
   }
-  else {
-    itemsCart[item_id] = [item, 1];
-  }
-}
 
-function removeItem(item){
-  if (itemsCart.hasOwnProperty(item)){
-    delete itemsCart[item]
+  else {
+    // If item not in dict yet then set quantity to 1
+    itemsCart[item_id] = [itemButton, 1];
+
+    const cartForm = document.createElement('form');
+    cartForm.setAttribute("data-id", item_id);
+    divCart.appendChild(cartForm);
+
+    const itemContent = document.createElement('p');
+    itemContent.innerHTML = `${item_id} $${item_price} x 1 = $${item_price}`;
+    cartForm.appendChild(itemContent);
+
+    const removeCartItem = document.createElement('button');
+    removeCartItem.setAttribute("data-id", item_id);
+    removeCartItem.innerHTML = "Remove";
+    removeCartItem.type="button";
+    cartForm.appendChild(removeCartItem);
+
+    removeCartItem.addEventListener("click", function() {
+      console.log(`[${item_id}] clicked to remove item from cart`)
+      deleteItemFromCart(item_id);
+    });
+
+    const addOneItem = document.createElement('button');
+    addOneItem.innerHTML = "+";
+    addOneItem.type="button";
+    cartForm.appendChild(addOneItem);
+
+    addOneItem.addEventListener("click", function() {
+      itemsCart[item_id][1] += 1;
+      updateCart();
+      document.querySelector(`form[data-id="${item_id}"] b`).innerText = `${item_id} $${item_price} x ${itemsCart[item_id][1]} = $${item_price}`;
+    });
+
+    // const removeOneItem = document.createElement('button');
+    // // removeOneItem.className = "modify-cart";
+    // removeOneItem.innerHTML = "-";
+    // cartForm.appendChild(removeOneItem);
+
+
+    // const setItemQuantity = document.createElement('input');
+    // // setItemQuantity.id = data[i].name;
+    // // setItemQuantity.className = "modify-cart";
+    // setItemQuantity.text = "Remove";
+    // cartForm.appendChild(setItemQuantity);
   }
-  // Before refactor
-  // for (let i = 0; i < cartCount(); i += 1){
-  //   if (item == itemsCart[i]){
-  //     itemsCart.splice(i, 1)
-  //   }
-  // }
+  document.querySelector(`form[data-id="${item_id}"] p`).innerHTML = `<b>${item_id} $${item_price} x ${itemsCart[item_id][1]} = $${item_price * itemsCart[item_id][1]}</b>`;
 }
 
 for (let i = 0; i < data.length; i += 1){
-  console.log("iterating through data.js");
-  // create li tag for each item
   const newLi = document.createElement('li');
   ul_list.appendChild(newLi);
 
-  // Add figure tag to list item
   const figure = document.createElement('figure');
   newLi.appendChild(figure);
 
@@ -46,17 +97,14 @@ for (let i = 0; i < data.length; i += 1){
   img.src = data[i].image;
   figure.appendChild(img);
 
-  // Add figcation to figure
   const figcation_decr = document.createElement('figcaption')
   figcation_decr.innerText = data[i].desc;
   figure.appendChild(figcation_decr);
 
-  // Add p to figure
   const price = document.createElement('p');
   price.innerText = `$${data[i].price}`
-  figure.appendChild(price)
+  figure.appendChild(price);
 
-  // Add button to figure
   const button = document.createElement('button');
   button.id = data[i].name;
   button.dataset.price = data[i].price;
@@ -70,11 +118,11 @@ qtyAndTotal.className = "qty-and-total";
 ul_list.appendChild(qtyAndTotal);
 
 const itemInCart = document.createElement('p');
-itemInCart.innerText = `Items in cart: ${itemsCart.length}`;
+itemInCart.innerText = "Items in cart: 0";
 qtyAndTotal.appendChild(itemInCart);
 
 const cartTotalPrice = document.createElement('p');
-cartTotalPrice.innerText = `Total = $0`;
+cartTotalPrice.innerText = "Total = $0";
 qtyAndTotal.appendChild(cartTotalPrice);
 
 // display Cart
@@ -82,34 +130,22 @@ const divCart = document.createElement('div');
 divCart.className = "cart";
 ul_list.appendChild(divCart);
 
-const cartArray = document.createElement('ul');
-divCart.appendChild(cartArray);
-
-// const cartTotalPrice = document.createElement('p');
-// cartTotalPrice.innerText = `Total = $0`;
-// qtyAndTotal.appendChild(cartTotalPrice);
-
 function updateCart(){
   let totalCartPrice = 0;
   let itemsCount = 0;
 
-  Object.keys(itemsCart).forEach(function(key) {
+  Object.keys(itemsCart).forEach(function(key){
     const item = itemsCart[key];
-    itemsCount += 1 * item[1];
-    totalCartPrice += parseInt(item[0].getAttribute("data-price")) * item[1];
+    const item_price = parseInt(item[0].getAttribute("data-price"));
+
+    itemsCount += (1 * item[1]);
+    totalCartPrice += item_price * item[1];
   });
 
   itemInCart.innerText = `Items in cart: ${itemsCount}`;
   cartTotalPrice.innerText = `Total = $${totalCartPrice}`;
-  // For loop all items in cart
-  itemsCart.forEach(function(item) {
-    const itemInCart = document.createElement('li');   // v ${quantity}
-    itemInCart.innerHTML = `<b>${item.getAttribute("id")} $${item.getAttribute("data-price")} x  = $total_of_this_item}</b>`;
-    cartArray.appendChild(itemInCart);
-  });
 }
 
-// Listen to button clicks
 document.querySelectorAll(".add-to-cart").forEach(function(item) {
     item.addEventListener("click", function() {
       addItem(item);

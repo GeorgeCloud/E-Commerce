@@ -9,7 +9,6 @@ h1 {
 
 a {
   color: black;
-  /* text-decoration: none; */
 }
 
 li {
@@ -33,10 +32,31 @@ figure figcaption, p {
   padding-left: 1rem;
 }
 
-button {
+figure button {
   display: flex;
   align-self: flex-end;
   margin-right: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+form p {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+form input {
+  display: inline-block;
+  margin-right: 1rem;
+  height: 1rem;
+}
+
+form button {
+  margin-right: 0.1rem;
 }
 
 #navigation {
@@ -50,6 +70,7 @@ button {
   display: grid;
   grid-gap: 1rem;
   grid-column: column;
+  min-width: 925px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-areas: "item-1        item-2  item-3  item-4"
                        "item-5        item-6  item-7  item-8"
@@ -66,61 +87,62 @@ button {
 }
 
 .item-2 {
-  grid-area: "item-2";
+  grid-area: item-2;
 }
 
 .item-3 {
-  grid-area: "item-3";
+  grid-area: item-3;
 }
 
 .item-4 {
-  grid-area: "item-4";
+  grid-area: item-4;
 }
 
 .item-5 {
-  grid-area: "item-5";
+  grid-area: item-5;
 }
 
 .item-6 {
-  grid-area: "item-6";
+  grid-area: item-6;
 }
 
 .item-7 {
-  grid-area: "item-7";
+  grid-area: item-7;
 }
 
 .item-8 {
-  grid-area: "item-8";
+  grid-area: item-8;
 }
 
 .item-9 {
-  grid-area: "item-9";
+  grid-area: item-9;
 }
 
 .item-10 {
-  grid-area: "item-10";
+  grid-area: item-10;
 }
 
 .item-11 {
-  grid-area: "item-11";
+  grid-area: item-11;
 }
 
 .item-12 {
-  grid-area: "item-12";
+  grid-area: item-12;
 }
 
 .qty-and-total {
-  grid-area: "qty-and-total";
+  grid-area: qty-and-total;
   margin: 16px 40px;
   border: solid 1px;
 }
 
 .cart {
-  grid-area: "cart";
+  grid-area: cart;
   margin: 16px 40px;
   border: solid 1px;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
-  /* justify-content: space-around; */
+  line-height: 1.5rem;
+}
+
+.cart input {
+  width: 50%;
 }
