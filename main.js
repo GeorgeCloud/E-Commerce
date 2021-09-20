@@ -9,12 +9,7 @@ function uniqueCartCount(){
 }
 
 function removeOneItemFromCart(item_id){
-  if (uniqueCartCount() > 1){
-    itemsCart[item_id] -= 1;
-  } else {
-    deleteItemFromCart(item_id);
-    return //  skip updateCart(); not sure if this works in JS;
-  }
+  (itemsCart[item_id][1] > 1) ? (itemsCart[item_id][1] -= 1) : deleteItemFromCart(item_id); // refactor
   updateCart();
 }
 
@@ -66,22 +61,28 @@ function addItem(itemButton){
     addOneItem.addEventListener("click", function() {
       itemsCart[item_id][1] += 1;
       updateCart();
-      document.querySelector(`form[data-id="${item_id}"] b`).innerText = `${item_id} $${item_price} x ${itemsCart[item_id][1]} = $${item_price}`;
     });
 
-    // const removeOneItem = document.createElement('button');
-    // // removeOneItem.className = "modify-cart";
-    // removeOneItem.innerHTML = "-";
-    // cartForm.appendChild(removeOneItem);
+    const removeOneItem = document.createElement('button');
+    removeOneItem.innerHTML = "-";
+    removeOneItem.type="button";
+    cartForm.appendChild(removeOneItem);
 
+    removeOneItem.addEventListener("click", function() {
+      removeOneItemFromCart(item_id);
+    });
 
-    // const setItemQuantity = document.createElement('input');
-    // // setItemQuantity.id = data[i].name;
-    // // setItemQuantity.className = "modify-cart";
-    // setItemQuantity.text = "Remove";
-    // cartForm.appendChild(setItemQuantity);
+    const setItemQuantity = document.createElement('input');
+    setItemQuantity.type = "number";
+    setItemQuantity.min = 1;
+    cartForm.appendChild(setItemQuantity);
+
+    setItemQuantity.onchange = function(e){
+      itemsCart[item_id][1] = parseInt(e.target.value);
+      updateCart();
+    }
   }
-  document.querySelector(`form[data-id="${item_id}"] p`).innerHTML = `<b>${item_id} $${item_price} x ${itemsCart[item_id][1]} = $${item_price * itemsCart[item_id][1]}</b>`;
+  updateCart();
 }
 
 for (let i = 0; i < data.length; i += 1){
@@ -138,8 +139,9 @@ function updateCart(){
     const item = itemsCart[key];
     const item_price = parseInt(item[0].getAttribute("data-price"));
 
-    itemsCount += (1 * item[1]);
+    itemsCount += item[1]; // 0?
     totalCartPrice += item_price * item[1];
+    document.querySelector(`form[data-id="${key}"] p`).innerText = `${key} $${item_price} x ${item[1]} = $${item_price * item[1]}`;
   });
 
   itemInCart.innerText = `Items in cart: ${itemsCount}`;
